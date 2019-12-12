@@ -7,14 +7,7 @@ public class Cell_Authoring : MonoBehaviour, IConvertGameObjectToEntity
 {
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        CellData data = new CellData
-        {
-            cellPosition = Vector3.zero,
-            currentState = false,
-            nextState = false,
-        };
-
-        // cellPrefab = conversionSystem.GetPrimaryEntity(cellPrefab);
-        dstManager.AddComponentData(entity, data);
+        dstManager.AddComponentData(entity, new CellIndex { index = 0 });
+        dstManager.AddComponentData(entity, new CellTransition { transition = 0.0f });
     }
 }
