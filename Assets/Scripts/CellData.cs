@@ -7,5 +7,5 @@ public struct CellData : IComponentData
     public bool currentState;
     public bool nextState;
     public float transition;
-    public Entity[] neighbors;
+    //public Entity[] neighbors;
 }

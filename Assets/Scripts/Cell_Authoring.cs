@@ -10,8 +10,8 @@ public class Cell_Authoring : MonoBehaviour, IConvertGameObjectToEntity
         CellData data = new CellData
         {
             cellPosition = Vector3.zero,
-            isAlive = false,
-            neighbors = 0
+            currentState = false,
+            nextState = false,
         };
 
         // cellPrefab = conversionSystem.GetPrimaryEntity(cellPrefab);

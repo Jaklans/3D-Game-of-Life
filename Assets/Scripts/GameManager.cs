@@ -31,9 +31,9 @@ public class GameManager : MonoBehaviour
 
                     var position = transform.TransformPoint(x + positionalOffset, y + positionalOffset, z + positionalOffset);
 
-                    entityManager.SetComponentData(cellInstance, new Translation { Value = position });
+                    //entityManager.SetComponentData(cellInstance, new Translation { Value = position });
 
-                    CellData cData = new CellData { cellPosition = position, isAlive = true, neighbors = 0 };
+                    CellData cData = new CellData {cellPosition = position, currentState = false, nextState = false, transition = 1.0f};
 
                     entityManager.SetComponentData(cellInstance, cData);
                 }
