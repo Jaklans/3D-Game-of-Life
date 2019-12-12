@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using static Unity.Mathematics.math;
 
-public class Cell_System : JobComponentSystem
+/*public class Cell_System : JobComponentSystem
 {
     [BurstCompile]
     struct Cell_System : IJobForEach<CellData>
@@ -15,7 +15,7 @@ public class Cell_System : JobComponentSystem
         {
             throw new System.NotImplementedException();
         }
-    }
+    };
 
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
@@ -23,4 +23,4 @@ public class Cell_System : JobComponentSystem
 
         return job.Schedule(this, inputDeps);
     }
-}
+}*/
