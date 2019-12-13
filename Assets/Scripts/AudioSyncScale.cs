@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AudioSyncScale : AudioSyncer
 {
-    private Vector3 beatScale;
-    private Vector3 restScale;
+    [SerializeField] private Vector3 beatScale;
+    [SerializeField] private Vector3 restScale;
 
     private IEnumerator MoveToScale(Vector3 _target)
     {
@@ -26,7 +26,7 @@ public class AudioSyncScale : AudioSyncer
     }
 
     // Update is called once per frame
-    void Update()
+    public override void OnUpdate()
     {
         base.OnUpdate();
 
