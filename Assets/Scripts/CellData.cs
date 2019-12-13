@@ -3,7 +3,7 @@ using Unity.Entities;
 
 public struct CellTransition : IComponentData
 {
-    public float transition;
+    public float value;
 }
 
 public struct CellIndex : IComponentData

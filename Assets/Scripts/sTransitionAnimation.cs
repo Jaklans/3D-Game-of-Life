@@ -8,41 +8,27 @@ using static Unity.Mathematics.math;
 
 public class sTransitionAnimation : JobComponentSystem
 {
-    // This declares a new kind of job, which is a unit of work to do.
-    // The job is declared as an IJobForEach<Translation, Rotation>,
-    // meaning it will process all entities in the world that have both
-    // Translation and Rotation components. Change it to process the component
-    // types you want.
-    //
-    // The job is also tagged with the BurstCompile attribute, which means
-    // that the Burst compiler will optimize it for the best performance.
     [BurstCompile]
     struct sTransitionAnimationJob : IJobForEach<Scale, Rotation, CellTransition, CellStatus>
     {
-        // Add fields here that your job needs to do its work.
-        // For example,
-        //    public float deltaTime;
-        
-        
-        
         public void Execute(ref Scale scale, ref Rotation rotation, [ReadOnly] ref CellTransition u, [ReadOnly] ref CellStatus status)
         {
             if (status.activeState == status.nextState) return;
             if (status.activeState)
             {
-                scale.Value = 1.0f - u.transition;
+                scale.Value = 1.0f - u.value;
                 //rotation.Value =
             }
             else
             {
-                scale.Value = u.transition;
+                scale.Value = u.value;
             }
         }
     }
 
     public new bool ShouldRunSystem()
     {
-        return !gameState.shouldUpdate();
+        return base.ShouldRunSystem() && !gameState.shouldUpdate();
     }
 
     protected override JobHandle OnUpdate(JobHandle inputDependencies)
