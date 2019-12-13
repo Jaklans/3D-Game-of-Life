@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
                     entityManager.AddComponent<CellIndex>(cellInstance);
                     entityManager.AddComponent<CellTransition>(cellInstance);
-                    entityManager.AddComponent<CellNeighbors>(cellInstance);
+                    //entityManager.AddComponent<CellNeighbors>(cellInstance);
 
                     entityManager.SetComponentData(cellInstance, cTran);
                     entityManager.SetComponentData(cellInstance, cInd);

@@ -7,6 +7,21 @@ using Unity.Transforms;
 using static Unity.Mathematics.math;
 
 
+public class gameState
+{
+    static gameState state;
+    bool update = false;
+    public static bool shouldUpdate()
+    {
+        if (state == null) state = new gameState();
+        return state.update;
+    }
+    public static void setUpdate(bool update)
+    {
+        if (state == null) state = new gameState();
+        state.update = update;
+    }
+}
 
 public class sAdvanceSim : JobComponentSystem
 {
@@ -20,9 +35,6 @@ public class sAdvanceSim : JobComponentSystem
     NativeArray<bool> stateA;
     NativeArray<bool> stateB;
     bool currentState;
-
-    
-
 
         [BurstCompile]
     struct sAdvanceSimJob : IJobForEach<CellIndex>
@@ -73,7 +85,35 @@ public class sAdvanceSim : JobComponentSystem
             }
         }
     }
-    
+
+    public new bool ShouldRunSystem()
+    {
+        return gameState.shouldUpdate();
+    }
+
+    protected override void OnCreate()
+    {
+        base.OnCreate();
+
+        bool[] initialState = new bool[1000];
+
+        Random random = new Random();
+        random.InitState();
+        for(int i = 0; i < 1000; i++)
+        {
+            initialState[i] = random.NextBool();
+        }
+        stateA = new NativeArray<bool>(initialState, Allocator.Persistent);
+        stateB = new NativeArray<bool>(initialState, Allocator.Persistent);
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        stateA.Dispose();
+        stateB.Dispose();
+    }
+
     protected override JobHandle OnUpdate(JobHandle inputDependencies)
     {
         var job = new sAdvanceSimJob();
