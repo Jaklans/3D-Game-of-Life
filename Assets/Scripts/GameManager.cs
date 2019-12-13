@@ -31,28 +31,30 @@ public class GameManager : MonoBehaviour
 
                     var position = transform.TransformPoint(x * 1.2f - 4.5f, y * 1.2f, z * 1.2f);
 
-                    CellTransition cTran = new CellTransition { transition = 1.0f };
+                    CellTransition cTran = new CellTransition { transition = 0.0f };
 
-                    CellIndex cInd;
+                    CellIndex cIndex;
 
                     if (x == 0 || x == gridWidth - 1 || y == 0 ||  y == gridHeight - 1 || z == 0 || z == gridDepth - 1)
                     {
-                        cInd = new CellIndex { deadCell = true, index = cellCounter };
+                        cIndex = new CellIndex { deadCell = true, index = cellCounter };
                     }
                     else
                     {
-                        cInd = new CellIndex { deadCell = false, index = cellCounter };
+                        cIndex = new CellIndex { deadCell = false, index = cellCounter };
                     }
 
                     cellCounter++;
 
                     entityManager.AddComponent<CellIndex>(cellInstance);
                     entityManager.AddComponent<CellTransition>(cellInstance);
-                    entityManager.AddComponent<CellNeighbors>(cellInstance);
+                    entityManager.AddComponent<Scale>(cellInstance);
+                    //entityManager.AddComponent<CellNeighbors>(cellInstance);
 
                     entityManager.SetComponentData(cellInstance, cTran);
-                    entityManager.SetComponentData(cellInstance, cInd);
+                    entityManager.SetComponentData(cellInstance, cIndex);
                     entityManager.SetComponentData(cellInstance, new Translation { Value = position });
+                    entityManager.SetComponentData(cellInstance, new Scale { Value = 1 });
                 }
             }
         }

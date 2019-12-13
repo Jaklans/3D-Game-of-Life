@@ -12,9 +12,8 @@ public struct CellIndex : IComponentData
     public bool deadCell;
 }
 
-public unsafe struct CellNeighbors : IComponentData
+public struct CellStatus : IComponentData
 {
-    public fixed int neighbors[26];
+    public bool activeState;
+    public bool nextState;
 }
-
-
