@@ -30,17 +30,19 @@ public class sAdvanceSim : JobComponentSystem
     const int fT = 5; //Fertility min
     const int fU = 5; //Fertility max
 
-    int3 dimmensions = new int3(5, 5, 5);
+    int3 dimmensions = new int3(10,10,10);
 
     NativeArray<bool> stateA;
     NativeArray<bool> stateB;
-    bool currentState;
+    bool currentState = false;
 
         [BurstCompile]
     struct sAdvanceSimJob : IJobForEach<CellIndex>
     {
         [ReadOnly]
         public NativeArray<bool> activeState;
+
+        [NativeDisableParallelForRestriction]
         [WriteOnly]
         public NativeArray<bool> nextState;
 
@@ -49,8 +51,6 @@ public class sAdvanceSim : JobComponentSystem
 
         public void Execute([ReadOnly] ref CellIndex cell)
         {
-
-            
             if (cell.deadCell) return;
 
             //Run through each neighbor based on indicies
