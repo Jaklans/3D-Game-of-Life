@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
                     // Instantiate our cell prefab as a entity
                     var cellInstance = entityManager.Instantiate(prefab);
 
-                    var position = transform.TransformPoint(x * 1.1f, y * 1.1f, z * 1.1f);
+                    var position = transform.TransformPoint(x * 1.2f - 4.5f, y * 1.2f, z * 1.2f);
 
                     CellTransition cTran = new CellTransition { transition = 1.0f };
 
