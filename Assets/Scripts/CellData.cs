@@ -9,4 +9,5 @@ public struct CellTransition : IComponentData
 public struct CellIndex : IComponentData
 {
     public int index;
+    public bool deadCell;
 }
