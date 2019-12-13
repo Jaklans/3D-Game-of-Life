@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
                     var position = transform.TransformPoint(x * 1.2f - 4.5f, y * 1.2f, z * 1.2f);
 
-                    CellTransition cTran = new CellTransition { transition = 1.0f };
+                    CellTransition cTran = new CellTransition { transition = 0.0f };
 
                     CellIndex cIndex;
 
@@ -48,11 +48,13 @@ public class GameManager : MonoBehaviour
 
                     entityManager.AddComponent<CellIndex>(cellInstance);
                     entityManager.AddComponent<CellTransition>(cellInstance);
+                    entityManager.AddComponent<Scale>(cellInstance);
                     //entityManager.AddComponent<CellNeighbors>(cellInstance);
 
                     entityManager.SetComponentData(cellInstance, cTran);
                     entityManager.SetComponentData(cellInstance, cIndex);
                     entityManager.SetComponentData(cellInstance, new Translation { Value = position });
+                    entityManager.SetComponentData(cellInstance, new Scale { Value = 1 });
                 }
             }
         }

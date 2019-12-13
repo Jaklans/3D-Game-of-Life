@@ -36,20 +36,19 @@ public class sAdvanceSim : JobComponentSystem
     NativeArray<bool> stateB;
     bool currentState = false;
 
-        [BurstCompile]
-    struct sAdvanceSimJob : IJobForEach<CellIndex>
+    [BurstCompile]
+    struct sAdvanceSimJob : IJobForEach<CellIndex, CellStatus>
     {
         [ReadOnly]
         public NativeArray<bool> activeState;
 
         [NativeDisableParallelForRestriction]
-        [WriteOnly]
         public NativeArray<bool> nextState;
 
         [ReadOnly]
         public int3 dim;
 
-        public void Execute([ReadOnly] ref CellIndex cell)
+        public void Execute([ReadOnly] ref CellIndex cell, [WriteOnly] ref CellStatus status)
         {
             if (cell.deadCell) return;
 
@@ -71,17 +70,21 @@ public class sAdvanceSim : JobComponentSystem
                 }
             }
 
+            status.activeState = activeState[cell.index];
+
             //If currently alive
-            if (activeState[cell.index])
+            if (status.activeState)
             {
                 //Kill if survival conditions not met
-                nextState[cell.index] = !(activeNeighbors < eT || activeNeighbors > eU);
+                status.nextState = !(activeNeighbors < eT || activeNeighbors > eU);
+                nextState[cell.index] = status.nextState;
             }
             //If currently dead
             else
             {
                 //Spawn if fertility conditions met
-                nextState[cell.index] = activeNeighbors >= fT && activeNeighbors <= fU;
+                status.nextState = activeNeighbors >= fT && activeNeighbors <= fU;
+                nextState[cell.index] = status.nextState;
             }
         }
     }
@@ -122,7 +125,9 @@ public class sAdvanceSim : JobComponentSystem
         job.nextState = currentState ? stateB : stateA;
         job.dim = dimmensions;
 
-        // Now that the job is set up, schedule it to be run. 
+        currentState = !currentState;
+        gameState.setUpdate(false);
+
         return job.Schedule(this, inputDependencies);
     }
 }
