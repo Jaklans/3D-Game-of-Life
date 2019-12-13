@@ -30,7 +30,7 @@ public class sAdvanceSim : JobComponentSystem
     const int fT = 5; //Fertility min
     const int fU = 5; //Fertility max
 
-    int3 dimmensions = new int3(10,10,10);
+    int3 dimmensions = new int3(20);
 
     NativeArray<bool> stateA;
     NativeArray<bool> stateB;
@@ -39,6 +39,8 @@ public class sAdvanceSim : JobComponentSystem
     [BurstCompile]
     struct sAdvanceSimJob : IJobForEach<CellIndex, CellStatus>
     {
+        public bool skip;
+
         [ReadOnly]
         public NativeArray<bool> activeState;
 
@@ -50,7 +52,7 @@ public class sAdvanceSim : JobComponentSystem
 
         public void Execute([ReadOnly] ref CellIndex cell, [WriteOnly] ref CellStatus status)
         {
-            if (cell.deadCell) return;
+            if (cell.deadCell || skip) return;
 
             //Run through each neighbor based on indicies
             int activeNeighbors = 0;
@@ -91,18 +93,18 @@ public class sAdvanceSim : JobComponentSystem
 
     public new bool ShouldRunSystem()
     {
-        return gameState.shouldUpdate();
+        return base.ShouldRunSystem() && gameState.shouldUpdate();
     }
 
     protected override void OnCreate()
     {
         base.OnCreate();
 
-        bool[] initialState = new bool[1000];
+        bool[] initialState = new bool[dimmensions.x * dimmensions.y * dimmensions.z];
 
         Random random = new Random();
         random.InitState();
-        for(int i = 0; i < 1000; i++)
+        for(int i = 0; i < initialState.Length; i++)
         {
             initialState[i] = random.NextBool();
         }
@@ -124,8 +126,9 @@ public class sAdvanceSim : JobComponentSystem
         job.activeState = currentState ? stateA : stateB;
         job.nextState = currentState ? stateB : stateA;
         job.dim = dimmensions;
+        job.skip = !gameState.shouldUpdate();
 
-        currentState = !currentState;
+        if(!job.skip) currentState = !currentState;
         gameState.setUpdate(false);
 
         return job.Schedule(this, inputDependencies);

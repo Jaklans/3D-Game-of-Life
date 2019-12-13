@@ -323,8 +323,6 @@ MonoBehaviour:
   timeStep: 0.15
   timeToBeat: 0.05
   restSmoothTime: 2
-  beatScale: {x: 60, y: 2, z: 2}
-  restScale: {x: 55, y: 1, z: 1}
 --- !u!65 &102480739
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -411,16 +409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07fb34c869b14f4f893e19392afe44e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bias: 15
-  timeStep: 0.15
-  timeToBeat: 0.05
-  restSmoothTime: 2
-  beatColors:
-  - {r: 0.32974365, g: 0.735849, b: 0.4237844, a: 0}
-  - {r: 0.6509434, g: 0.5671666, b: 0.03991636, a: 0}
-  - {r: 0.754717, g: 0.11747954, b: 0.11747954, a: 0}
-  restColor: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 0}
-  pSystem: {fileID: 1956363736}
 --- !u!1 &109459881
 GameObject:
   m_ObjectHideFlags: 3
@@ -487,8 +475,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109459881}
-  m_LocalRotation: {x: 0.029734697, y: -0.000000017253253, z: 0.0000000012158055,
-    w: 0.99955785}
+  m_LocalRotation: {x: 0.029734697, y: 0.000000017211416, z: 1.9055565e-10, w: 0.99955785}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2073,7 +2060,6 @@ GameObject:
   - component: {fileID: 1855911720}
   - component: {fileID: 1855911719}
   - component: {fileID: 1855911718}
-  - component: {fileID: 1855911721}
   - component: {fileID: 1855911722}
   m_Layer: 0
   m_Name: Main Camera
@@ -2140,27 +2126,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1855911717}
-  m_LocalRotation: {x: 0.0297347, y: -0.00000003446467, z: 0.00000000102525, w: 0.99955785}
+  m_LocalRotation: {x: 0.0297347, y: 0.00000003446467, z: -0.00000000102525, w: 0.99955785}
   m_LocalPosition: {x: 0.85, y: 7.73, z: -20.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1855911721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1855911717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 742da4f9ff892984dabfb53a6b649914, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 1855911719}
-  center: {fileID: 1107812659}
 --- !u!114 &1855911722
 MonoBehaviour:
   m_ObjectHideFlags: 0

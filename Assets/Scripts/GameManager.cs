@@ -8,9 +8,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject cellPrefab;
-    public const int gridHeight = 10;
-    public const int gridWidth = 10;
-    public const int gridDepth = 10;
+    public const int gridHeight =20;
+    public const int gridWidth = 20;
+    public const int gridDepth = 20;
 
     private int cellCounter = 0;
 
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
                     var position = transform.TransformPoint(x * 1.2f - 4.5f, y * 1.2f, z * 1.2f);
 
-                    CellTransition cTran = new CellTransition { transition = 0.0f };
+                    CellTransition cTran = new CellTransition { value = 0.0f };
 
                     CellIndex cIndex;
 
@@ -48,13 +48,14 @@ public class GameManager : MonoBehaviour
 
                     entityManager.AddComponent<CellIndex>(cellInstance);
                     entityManager.AddComponent<CellTransition>(cellInstance);
+                    entityManager.AddComponent<CellStatus>(cellInstance);
                     entityManager.AddComponent<Scale>(cellInstance);
                     //entityManager.AddComponent<CellNeighbors>(cellInstance);
 
                     entityManager.SetComponentData(cellInstance, cTran);
                     entityManager.SetComponentData(cellInstance, cIndex);
                     entityManager.SetComponentData(cellInstance, new Translation { Value = position });
-                    entityManager.SetComponentData(cellInstance, new Scale { Value = 1 });
+                    entityManager.SetComponentData(cellInstance, new Scale { Value = cIndex.deadCell ? 0.0f:1.0f });
                 }
             }
         }
