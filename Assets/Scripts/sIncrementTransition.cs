@@ -20,14 +20,14 @@ public class sIncrementTransition : JobComponentSystem
     //float currentValue = 0.0f;
     const float speedModifier = 1f;     // Multiplied to deltaTime to speed up or slow down the transition rate
     bool shouldTransition = false;
-    float transitionValue = 0.0;
+    float transitionValue = 0.0f;
 
     [BurstCompile]
     struct sIncrementTransitionJob : IJobForEach<CellTransition>
     {
         // Add fields here that your job needs to do its work.
         // For example,
-        float currentValue;
+        public float currentValue;
 
         public void Execute(ref CellTransition cellTransition)
         {
@@ -56,7 +56,7 @@ public class sIncrementTransition : JobComponentSystem
         // For example,
         //job.deltaTime = UnityEngine.Time.deltaTime;
 
-        transitionValue += UnityEngine.deltaTime * job.speedModifier;
+        transitionValue += UnityEngine.Time.deltaTime * speedModifier;
 
         job.currentValue = transitionValue;
 
