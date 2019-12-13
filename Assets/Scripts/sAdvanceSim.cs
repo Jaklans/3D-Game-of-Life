@@ -26,9 +26,9 @@ public class gameState
 public class sAdvanceSim : JobComponentSystem
 {
     const int eT = 4; //Existance min
-    const int eU = 5; //Existance max
-    const int fT = 5; //Fertility min
-    const int fU = 5; //Fertility max
+    const int eU = 7; //Existance max
+    const int fT = 6; //Fertility min
+    const int fU = 6; //Fertility max
 
     int3 dimmensions = new int3(20);
 
@@ -53,6 +53,11 @@ public class sAdvanceSim : JobComponentSystem
         public void Execute([ReadOnly] ref CellIndex cell, [WriteOnly] ref CellStatus status)
         {
             if (cell.deadCell || skip) return;
+            if (cell.deadCell)
+            {
+                nextState[cell.index] = false;
+                return;
+            }
 
             //Run through each neighbor based on indicies
             int activeNeighbors = 0;
