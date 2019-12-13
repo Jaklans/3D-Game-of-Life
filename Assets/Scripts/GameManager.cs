@@ -8,7 +8,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject cellPrefab;
-    public const int gridHeight =20;
+    public const int gridHeight = 20;
     public const int gridWidth = 20;
     public const int gridDepth = 20;
 
