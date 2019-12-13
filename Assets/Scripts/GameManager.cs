@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public const int gridWidth = 10;
     public const int gridDepth = 10;
 
-    private float positionalOffset = 5.0f;
+    private int cellCounter = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -27,15 +27,32 @@ public class GameManager : MonoBehaviour
                 for (int z = 0; z < gridDepth; z++)
                 {
                     // Instantiate our cell prefab as a entity
-                    var cellInstance = entityManager.Instantiate(cellPrefab);
+                    var cellInstance = entityManager.Instantiate(prefab);
 
-                    var position = transform.TransformPoint(x + positionalOffset, y + positionalOffset, z + positionalOffset);
+                    var position = transform.TransformPoint(x * 1.1f, y * 1.1f, z * 1.1f);
 
-                    //entityManager.SetComponentData(cellInstance, new Translation { Value = position });
+                    CellTransition cTran = new CellTransition { transition = 1.0f };
 
-                    CellData cData = new CellData {cellPosition = position, currentState = false, nextState = false, transition = 1.0f};
+                    CellIndex cInd;
 
-                    entityManager.SetComponentData(cellInstance, cData);
+                    if (x == 0 || x == gridWidth - 1 || y == 0 ||  y == gridHeight - 1 || z == 0 || z == gridDepth - 1)
+                    {
+                        cInd = new CellIndex { deadCell = true, index = cellCounter };
+                    }
+                    else
+                    {
+                        cInd = new CellIndex { deadCell = false, index = cellCounter };
+                    }
+
+                    cellCounter++;
+
+                    entityManager.AddComponent<CellIndex>(cellInstance);
+                    entityManager.AddComponent<CellTransition>(cellInstance);
+                    entityManager.AddComponent<CellNeighbors>(cellInstance);
+
+                    entityManager.SetComponentData(cellInstance, cTran);
+                    entityManager.SetComponentData(cellInstance, cInd);
+                    entityManager.SetComponentData(cellInstance, new Translation { Value = position });
                 }
             }
         }
